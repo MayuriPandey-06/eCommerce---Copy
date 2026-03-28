@@ -6,7 +6,7 @@ const products = [
         price: 199.99,
         rating: 4.5,
         category: "Electronics",
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+        image: "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Rockerz_650_pp_renders_main_banner.124.png?v=1740735495&width=400?w=400&h=400&fit=crop",
         description: "High-quality wireless headphones with noise cancellation and premium sound quality for an immersive listening experience."
     },
     {
@@ -15,7 +15,7 @@ const products = [
         price: 299.99,
         rating: 4.7,
         category: "Electronics",
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQM0wrNFZJzmQo0HVM-W-nCtN9t1-9VP3WmA&s?w=400&h=400&fit=crop",
         description: "Feature-packed smartwatch with health tracking, notifications, and a sleek design that complements any style."
     },
     {
@@ -24,7 +24,7 @@ const products = [
         price: 29.99,
         rating: 4.2,
         category: "Clothing",
-        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop",
+        image: "https://www.hancockfashion.com/cdn/shop/files/51be7b6a-f0a5-4c53-9635-adccb17be6b31714126302364-Hancock-Men-Solid-Pique-Polo-Collar-Bio-Finish-Pure-Cotton-T-1.jpg?v=1734411563?w=400&h=400&fit=crop",
         description: "Comfortable cotton t-shirt available in multiple colors, perfect for casual wear and everyday comfort."
     },
     {
@@ -33,7 +33,7 @@ const products = [
         price: 129.99,
         rating: 4.6,
         category: "Clothing",
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+        image: "https://www.campusshoes.com/cdn/shop/files/LEVEL_LEVEL_WHT-L.GRY_07_831c7a2c-ff1b-4011-9268-b11f984219c6.webp?v=1757580207?w=400&h=400&fit=crop",
         description: "Lightweight running shoes with excellent cushioning and support for your active lifestyle."
     },
     {
@@ -42,7 +42,7 @@ const products = [
         price: 89.99,
         rating: 4.3,
         category: "Home",
-        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop",
+        image: "https://m.media-amazon.com/images/I/81poMW9LWBL._AC_UF350,350_QL80_.jpg?w=400&h=400&fit=crop",
         description: "Automatic coffee maker for perfect brew every time, making your morning routine effortless."
     },
     {
@@ -60,7 +60,7 @@ const products = [
         price: 39.99,
         rating: 4.4,
         category: "Beauty",
-        image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop",
+        image: "https://www.instyle.com/thmb/V5yKOm3i2zNPVGE0Ej59gPHA0zA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ins-moisturizers-for-dry-skin-tout-cdeac59768eb43ee9345dc311957028e.jpg?w=400&h=400&fit=crop",
         description: "Hydrating face moisturizer with SPF protection for healthy, glowing skin all day long."
     },
     {
@@ -69,7 +69,7 @@ const products = [
         price: 24.99,
         rating: 4.0,
         category: "Beauty",
-        image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=400&fit=crop",
+        image: "https://buyzo.in/cdn/shop/files/nude-red-different-shades-liquid-lipstick-set-of-4-16ml-702.webp?v=1752758917&width=1445?w=400&h=400&fit=crop",
         description: "Long-lasting lipstick in various shades, perfect for enhancing your natural beauty."
     },
     {
@@ -87,7 +87,7 @@ const products = [
         price: 34.99,
         rating: 4.3,
         category: "Home",
-        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+        image: "https://healthsense.in/cdn/shop/files/1_7b94b1a9-10b9-42d7-b107-8be31cc7781a.png?v=1745999487?w=400&h=400&fit=crop",
         description: "Non-slip yoga mat perfect for home workouts and maintaining your fitness routine."
     },
     {
@@ -105,12 +105,18 @@ const products = [
         price: 69.99,
         rating: 4.6,
         category: "Home",
-        image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXpF5ppUOKXh_3LV_uC_yQspv1KvoU56OhJA&s?w=400&h=400&fit=crop",
         description: "Ultrasonic essential oil diffuser for aromatherapy and creating a relaxing atmosphere."
     }
 ];
 
 // Global variables
+const currencySymbol = '₹';
+const inrConversionRate = 82;
+function formatPrice(value) {
+    return `${currencySymbol}${(value * inrConversionRate).toFixed(0)}`;
+}
+
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 let currentProduct = null;
@@ -251,7 +257,7 @@ function setupEventListeners() {
     sortFilter.addEventListener('change', sortProducts);
 
     cartBtn.addEventListener('click', () => showPage('cart'));
-    wishlistBtn.addEventListener('click', () => showPage('products'));
+    wishlistBtn.addEventListener('click', showWishlist);
 
     mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
@@ -361,12 +367,34 @@ function renderProducts(filteredProducts = products) {
     const productsToShow = filteredProducts.slice(startIndex, endIndex);
 
     productsGrid.className = `products-grid ${currentView}-view`;
+
+    if (productsToShow.length === 0) {
+        productsGrid.innerHTML = `
+            <div class="no-results">
+                <h3>Product not found</h3>
+                <p>Try another search term or browse our categories to find what you need.</p>
+            </div>
+        `;
+        if (loadMoreBtn) {
+            loadMoreBtn.style.display = 'none';
+        }
+        return;
+    }
+
     productsGrid.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
 
     // Show/hide load more button
     if (loadMoreBtn) {
         loadMoreBtn.style.display = endIndex < filteredProducts.length ? 'block' : 'none';
     }
+}
+
+function showWishlist() {
+    categoryFilter.value = '';
+    sortFilter.value = 'name';
+    currentPage = 1;
+    renderProducts(wishlist);
+    showPage('products');
 }
 
 function createProductCard(product) {
@@ -385,7 +413,7 @@ function createProductCard(product) {
                 </div>
                 <div class="product-info">
                     <div class="product-name">${product.name}</div>
-                    <div class="product-price">$${product.price}</div>
+                    <div class="product-price">${formatPrice(product.price)}</div>
                     <div class="product-rating">
                         <div class="rating-stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
                         <span class="rating-count">(${product.rating})</span>
@@ -412,7 +440,7 @@ function createProductCard(product) {
             </div>
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
-                <div class="product-price">$${product.price}</div>
+                <div class="product-price">${formatPrice(product.price)}</div>
                 <div class="product-rating">
                     <div class="rating-stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
                     <span class="rating-count">(${product.rating})</span>
@@ -446,7 +474,7 @@ function showProductDetail(productId) {
 
     productDetailImg.src = currentProduct.image;
     productDetailName.textContent = currentProduct.name;
-    productDetailPrice.textContent = `$${currentProduct.price}`;
+    productDetailPrice.textContent = formatPrice(currentProduct.price);
     productDetailDesc.textContent = currentProduct.description;
     productDetailRating.innerHTML = `
         <div class="rating-stars">${'★'.repeat(Math.floor(currentProduct.rating))}${'☆'.repeat(5 - Math.floor(currentProduct.rating))}</div>
@@ -576,7 +604,7 @@ function renderCart() {
             </div>
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">$${item.price}</div>
+                <div class="cart-item-price">${formatPrice(item.price)}</div>
                 <div class="cart-item-quantity">
                     <button onclick="updateCartQuantity(${item.id}, -1)">-</button>
                     <span>${item.quantity}</span>
@@ -605,15 +633,15 @@ function renderCart() {
             <h3>Order Summary</h3>
             <div class="summary-row">
                 <span>Subtotal:</span>
-                <span>$${subtotal.toFixed(2)}</span>
+                <span>${formatPrice(subtotal)}</span>
             </div>
             <div class="summary-row">
                 <span>Tax:</span>
-                <span>$${tax.toFixed(2)}</span>
+                <span>${formatPrice(tax)}</span>
             </div>
             <div class="summary-total">
                 <span>Total:</span>
-                <span>$${total.toFixed(2)}</span>
+                <span>${formatPrice(total)}</span>
             </div>
         </div>
         <div class="cart-actions">
@@ -654,6 +682,7 @@ function updateWishlistCount() {
 function handleSearch() {
     const query = searchInput.value.toLowerCase().trim();
     if (!query) {
+        categoryFilter.value = '';
         renderProducts();
         showPage('products');
         return;
@@ -669,7 +698,7 @@ function handleSearch() {
     showPage('products');
 
     if (filtered.length === 0) {
-        showToast(`No products found for "${query}"`, 'warning');
+        showToast('Product not found', 'warning');
     }
 }
 
@@ -827,7 +856,7 @@ function renderCheckout() {
                 <div class="checkout-item-name">${item.name}</div>
                 <div class="checkout-item-details">Quantity: ${item.quantity}</div>
             </div>
-            <div class="checkout-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+            <div class="checkout-item-price">${formatPrice(item.price * item.quantity)}</div>
         </div>
     `).join('');
 
@@ -841,7 +870,7 @@ function renderCheckout() {
         <div class="checkout-total">
             <div class="summary-row">
                 <span>Subtotal:</span>
-                <span>$${subtotal.toFixed(2)}</span>
+                <span>${formatPrice(subtotal)}</span>
             </div>
             <div class="summary-row">
                 <span>Shipping:</span>
@@ -849,11 +878,11 @@ function renderCheckout() {
             </div>
             <div class="summary-row">
                 <span>Tax:</span>
-                <span>$${tax.toFixed(2)}</span>
+                <span>${formatPrice(tax)}</span>
             </div>
             <div class="summary-total">
                 <span>Total:</span>
-                <span>$${total.toFixed(2)}</span>
+                <span>${formatPrice(total)}</span>
             </div>
         </div>
         <button class="btn-primary" id="placeOrderBtn">Place Order</button>
@@ -982,7 +1011,7 @@ function placeOrder() {
                     <div class="success-item-name">${item.name}</div>
                     <div class="success-item-details">Quantity: ${item.quantity}</div>
                 </div>
-                <div class="success-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                <div class="success-item-price">${formatPrice(item.price * item.quantity)}</div>
             </div>
         `).join('');
 
@@ -1003,14 +1032,14 @@ function placeOrder() {
             <div class="success-total">
                 <div class="summary-row">
                     <span>Subtotal:</span>
-                    <span>$${subtotal.toFixed(2)}</span>
+                    <span>${formatPrice(subtotal)}</span>
                 </div>
                 <div class="summary-row">
                     <span>Tax:</span>
-                    <span>$${tax.toFixed(2)}</span>
+                    <span>${formatPrice(tax)}</span>
                 </div>
                 <div class="summary-total">
-                    <strong>Total: $${total.toFixed(2)}</strong>
+                    <strong>Total: ${formatPrice(total)}</strong>
                 </div>
             </div>
         `;
